@@ -1,21 +1,32 @@
-<table class="table">
+ <div class="container p-2 my-2 bg-primary text-white">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><th>Rentals</th></a>
+      </div>
+    </nav>
+  </div>
+
+<table class="table table-success table-striped">
     <thead>
-        <tr>
-            <th>Car Id</th>
-            <th>Car Name</th>
-            <th>First and Last Name</th>
-            <th>Company Name</th>
-            <th>Rent Date</th>
-            <th>Return Date</th>
-        </tr>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Car Name</th>
+        <th scope="col">Name and Surname</th>
+        <th scope="col">Company Name</th>
+        <th scope="col">Rent Date</th>
+        <th scope="col">Return Date</th>
+      </tr>
     </thead>
-    <tr *ngFor="let rental of rentals">
-         <td>{{rental.carId}}</td>
-         <td>{{rental.carName}}</td>
-         <td>{{rental.firstName}} {{rental.lastName}}</td>
-         <td>{{rental.companyName}}</td>
-         <td>{{rental.rentDate}}</td>
-         <td>{{rental.returnDate}}</td>
-    </tr>
- </table>
+    <tbody>
+      <tr *ngFor="let rental of rentals">
+        <th scope="row">{{rental.carId}}</th>
+        <td>{{rental.carName}}</td>
+        <td>{{rental.firstName}} {{rental.lastName}}</td>
+        <td>{{rental.companyName}}</td>
+        <td>{{rental.rentDate}}</td>
+        <td>{{rental.returnDate}}</td>
+      </tr>
+    </tbody>
+  </table>
+
  
