@@ -1,34 +1,22 @@
-<div class="container p-2 my-2 bg-primary text-white">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"><th>Cars</th></a>
-      </div>
-    </nav>
+<h4>ARAÇ LİSTESİ</h4>
+<div class="row">
+<div class="card" *ngFor="let car of cars" style="width: 18rem;">
+  <img src="{{imageBasePath}}/{{car.imagePath}}" routerLink="/cars/details/{{car.carId}}" class="card-img-top" alt="{{car.description}} Image">
+  <div class="card-body">
+    <h5 class="card-title">{{car.carName}}</h5>
   </div>
-
-<table class="table table-success table-striped">
-    <thead>
-      <tr>
-        
-        <th scope="col">Car Name</th>
-        <th scope="col">Brand Name</th>
-        <th scope="col">Color Name</th>
-        <th scope="col">Model Year</th>
-        <th scope="col">Daily Price</th>
-        <th scope="col">Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let car of cars">
-        
-        <td>{{car.carName}}</td>
-        <td>{{car.brandName}}</td>
-        <td>{{car.colorName}}</td>
-        <td>{{car.modelYear}}</td>
-        <td>{{car.dailyPrice}}</td>
-        <td>{{car.description}}</td>
-        
-      </tr>
-    </tbody>
-  </table>
-
+  <ul class="list-group list-group-flush" >
+    <li class="list-group-item">Marka: {{car.brandName}}</li>
+    <li class="list-group-item">{{car.modelYear}} Model</li>
+    <li class="list-group-item">{{car.dailyPrice}} / günlük fiyat</li>
+  </ul>
+  <div class="card-body">
+    <section style="float:left">
+      <button type="button" class="btn btn-primary" routerLink="/cars/details/{{car.carId}}">Detay</button>
+    </section>
+    <section style="float:right">
+      <button type="button" class="btn btn-success">Kirala</button>
+    </section>
+   </div>
+ </div>
+</div>
