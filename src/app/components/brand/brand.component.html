@@ -1,11 +1,78 @@
-<li class="list-group-item active" aria-current="true">Marka</li>
-<ul  class="list-group">
-  <li [class]=" getAllCurrentBrandClass()" routerLink="/cars"  aria-current="true">Tümünü Markalar</li>
-  <li (click)="setCurrentBrand(brand)" 
-  routerLink="/cars/brand/{{brand.brandId}}"
-   *ngFor="let brand of brands"
-    [class]="getCurrentBrandClass(brand)">
-   {{brand.brandName}}</li>
-</ul>
 
+
+<br>
+<br>
+<div class="col-sm-12">
+  <section style="float:left">
+    <button type="button" class="btn btn-primary btn-sm w-100" style="background-color:dimgrey;" routerLink="/cars/filter/{{brandId}}/{{colorId}}">Tümünü Filtrele</button>
+  </section>
+  <div class="col-sm-12">
+  <section style="float:right"  >
+    <button  type="button" style="background-color:rgb(187, 110, 110) ;" routerLink="/cars" (click)="colorId=''" (click)="brandId=''" (click)="brandFilterText=''" (click)="colorFilterText=''" class="btn btn-success btn-sm w-10">Tümünü Temizle</button>
+  </section>
+ </div>
+ </div>
+<br>
+<br>
+
+
+
+
+<li class="list-group-item active"  style="background-color: rgb(55, 142, 146);" aria-current="true">Marka</li>
+
+
+
+
+<br>
+<section style="float:left">
+  <button type="button" class="btn btn-outline-secondary btn-sm w-100"  routerLink="/cars/brand/{{brandId}}"> Marka Filtrele</button>
+</section>
+
+
+<section style="float:right"  >
+  <button  type="button"  routerLink="/cars"  (click)="brandId=''" (click)="brandFilterText=''"  class="btn btn-outline-danger btn-sm w-10">Marka Temizle</button>
+</section>
+
+<br>
+
+
+
+
+<label for="brandFilterText" class="form-label"></label>
+<input type="text" class="form-control" [(ngModel)]="brandFilterText" list="datalistOptions" id="brandFilterText" placeholder="Aramak istediğiniz marka">
+
+
+<select [(ngModel)]="brandId"  class="form-select" size="5" aria-label="size 3 select example">
+  <option   selected  routerLink="/cars"  (click)="brandFilterText=''" (click)="brandId=''"  >Tüm Markalar</option>
+  <option  *ngFor="let brand of brands |brandFilter:brandFilterText"  [value]="brand.brandId"  [selected]="getSelectedBrand(brand.brandId)"> {{brand.brandName}}</option>
+</select>
+<br>
+
+<li class="list-group-item active" style="" style="background-color: rgb(55, 142, 146);" aria-current="true">Renk</li>
+
+
+
+
+<br>
+<section style="float:left">
+  <button type="button" class="btn btn-outline-secondary btn-sm w-100"routerLink="/cars/color/{{colorId}}"> Renk Filtrele</button>
+</section>
+
+
+<section style="float:right"  >
+  <button  type="button"  routerLink="/cars" (click)="colorId=''"  (click)="colorFilterText=''" class="btn btn-outline-danger btn-sm w-10">Renk Temizle</button>
+</section>
+
+<br>
+
+
+
+
+<label for="colorFilterText" class="form-label"></label>
+<input type="text" class="form-control" [(ngModel)]="colorFilterText" list="datalistOptions" id="colorFilterText" placeholder="Aramak istediğiniz renk">
+
+<select    [(ngModel)]="colorId" class="form-select" size="5" aria-label="size 3 select example">
+  <option selected  routerLink="/cars"  (click)="colorFilterText=''"  (click)="colorId=''">Tüm Renkler</option>
+  <option  *ngFor="let color of colors |colorFilter:colorFilterText"  [value]="color.colorId"  [selected]="getSelectedColor(color.colorId)"> {{color.colorName}}</option>
+</select>
 

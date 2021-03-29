@@ -1,9 +1,0 @@
-<li class="list-group-item active" aria-current="true">Renk</li>
-<ul class="list-group">
-  <li [class]=" getAllCurrentColorClass()" routerLink="/cars"  aria-current="true">Tüm renkler
-  <li (click)="setCurrentColor(color)"
-  routerLink="/cars/color/{{color.colorId}}"
-  *ngFor="let color of colors" 
-  [class]="getCurrentColorClass(color)">
-  {{color.colorName}}</li>
-</ul>

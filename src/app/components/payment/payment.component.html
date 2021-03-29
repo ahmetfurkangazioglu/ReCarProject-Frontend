@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-md-4">
+<div *ngFor="let car of cars">
+<div class="card" style="width: 23.1rem; background-color: rgb(146, 197, 195);">
+    <img src="{{imageBasePath}}/{{car.imagePath}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title" style="font-weight: 650;position:;">{{car.carName}}</h5>
+      <p class="card-text" style="font-weight: 700;">{{car.description}}</p>
+      <a routerLink="/cars" class="btn btn-primary">Araba Listesi</a>
+    </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-1"> </div>
+
+<div class="col-md-7">
+<div class="row row-cols-7" *ngFor="let car of cars">
+    <div class="col" class="p-2 mb-1 bg-secondary text-white" style="text-align: center; border: 3px solid rgb(146, 197, 195);" ><h5>Araba Markası: {{car.carName}}</h5></div>
+    <div class="col" class="p-3 mb-1 bg-secondary text-white" style="text-align: center; border: 3px solid  rgb(146, 197, 195);" ><h5>Arabanın Rengi: {{car.colorName}}</h5></div>
+    <br> <br>
+    <div class="col" class="p-3 mb-1 bg-secondary text-white" style="text-align: center; border: 3px solid  rgb(146, 197, 195);" ><h5>Arabanın Modeli: {{car.brandName}}</h5></div>
+    <div class="col" class="p-3 mb-1 bg-secondary text-white" style="text-align: center; border: 3px solid rgb(146, 197, 195);" ><h5>Arabanın Model Yılı: {{car.modelYear}}</h5></div>
+    <br> <br>
+    <div class="col" class="p-3 mb-1 bg-secondary text-white" style="text-align: center; border: 3px solid rgb(146, 197, 195);" ><h5>Arabanın Günlük Fiyatı: {{car.dailyPrice | currency}} </h5></div>
+    
+</div>
+  </div>
+</div>
+<br>
+
+<div class="row">
+  <div class="col-md-4">
+    <label for="rentDate"  >Alış Tarihi:</label>
+<input type="date" class="form-control" id="rentDate"  [(ngModel)]="rentDate">
+</div>
+
+<div class="col-md-4">
+  <label for="rentDate" >Teslim Tarihi:</label>
+  <input type="date" class="form-control"  id="returnDate" [(ngModel)]="returnDate">
+  
+</div>
+</div>  
+
+ 
+<br>
+
+<div class="row">
+  <div class="col-md-4">
+    
+    <label for="customerSelect" >Müşteriler:</label>
+  <select  [(ngModel)]="customerId"   id="customerSelect" class="form-select" aria-label="Müşteriler"> 
+    <option  *ngFor="let customer of customers" [value]="customer.customerId">{{customer.firstName}} {{customer.lastName}}--{{customer.companyName}}</option>
+  </select>
+
+</div>
+
+<div class="col-md-4">
+  <div  *ngFor="let car of cars" >  
+  <h6 (click)="totalPrice(car)">Toplam tutarı öğrenmek için basınız<nav></nav></h6>
+<div class="col" class="p-1 mb-1 " (click)="totalPrice(car)" style="text-align: center; border: 1px solid rgb(146, 197, 195);" ><h5>{{amountPaye | currency}}</h5></div>
+</div>
+</div>
+</div>
+
+
+
+<button  type="button" *ngFor="let car of cars" (click)="createRental(car)"  class="btn btn-outline-danger btn-sm w-10">Renk Temizle</button>
+{{success}} dewd
+
+<br><br>
+<div class="alert alert-success" *ngFor="let car of cars" role="alert">
+  <h4 class="alert-heading">Bize Güvenebilirsiniz.  </h4>
+  <hr>
+  <p class="mb-0">Bizim için tek önemli olan sizin can güvenliğinizdir. bu yüzden arablarımız her zaman en son teknolojilerle donatılıp sürekli bakımı yapılmaktadır.</p>
+</div>
+
+
+<br>
+<figure class="text-center">
+  <blockquote class="blockquote">
+    <p>Bizi tercih ettiğiniz için teşekkür ederiz.</p>
+  </blockquote>
+  <figcaption class="blockquote-footer">
+    AFG Araba Kiralama <cite title="Source Title"></cite>
+  </figcaption>
+</figure>
+

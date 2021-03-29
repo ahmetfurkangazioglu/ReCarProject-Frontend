@@ -1,22 +1,33 @@
-<h4>ARAÇ LİSTESİ</h4>
+
+<label for="filterText" class="form-label">Araba arayın</label>
+<input class="form-control" [(ngModel)]="filterText" list="datalistOptions" id="filterText" placeholder="Aramak istediğiniz araba">
+<br>
+<div *ngIf="filterText.length>0" class="alert alert-success">
+{{filterText}} aradınız
+</div>
+
+<h4 >ARAÇ LİSTESİ </h4>
 <div class="row">
-<div class="card" *ngFor="let car of cars" style="width: 18rem;">
-  <img src="{{imageBasePath}}/{{car.imagePath}}" routerLink="/cars/details/{{car.carId}}" class="card-img-top" alt="{{car.description}} Image">
+<div  class="card" *ngFor="let car of cars | carFilter:filterText"   style="width: 18rem;">
+  <div *ngIf="car.imagePath != null"> 
+  <img src="{{imageBasePath}}/{{car.imagePath }}" routerLink="/cars/details/{{car.carId}}" class="card-img-top" alt="{{car.description}} Image">
   <div class="card-body">
-    <h5 class="card-title">{{car.carName}}</h5>
+    <h5 class="card-title">{{car.carName }}</h5>
+    <br>
   </div>
   <ul class="list-group list-group-flush" >
-    <li class="list-group-item">Marka: {{car.brandName}}</li>
+    <li class="list-group-item">Marka: {{car.brandName | titlecase}} </li>
     <li class="list-group-item">{{car.modelYear}} Model</li>
-    <li class="list-group-item">{{car.dailyPrice}} / günlük fiyat</li>
+    <li class="list-group-item">{{car.dailyPrice | currency}} / günlük fiyat</li>
   </ul>
   <div class="card-body">
     <section style="float:left">
       <button type="button" class="btn btn-primary" routerLink="/cars/details/{{car.carId}}">Detay</button>
     </section>
-    <section style="float:right">
-      <button type="button" class="btn btn-success">Kirala</button>
+    <section style="float:right"  >
+      <button  type="button" routerLink="/cars/payment/{{car.carId}}" (click)="getToastrService()" class="btn btn-success">Kirala</button>
     </section>
    </div>
  </div>
+</div>
 </div>
