@@ -1,4 +1,12 @@
 
+
+<div class="row" >
+  <div class="col-md-3">
+  <app-brand></app-brand>
+  </div>
+
+  <div class="col-md-9">
+
 <div class="container">
 <div class="alert alert-secondary" role="alert">
   <h4>        Araba Bilgisi</h4>
@@ -41,9 +49,45 @@
       <div class="col" class="p-3 mb-2 bg-secondary text-white"></div>
       
     </div>
+   
+  </div>
 
+
+<br>
+
+  
+  <div class="row">
+
+    <div class="col-sm-8">
+  <button
+    type="button "
+    style="background-color:rgb(89, 152, 26);"
+    *ngFor="let car of cars"
+  
+    routerLink="/cars/payment/{{car.carId}}" 
+    class="btn btn-primary btn-lg w-100" 
+  >
+    Kirala
+  </button>
   </div>
   
+  <div class="col-sm-4">
+    <button
+      type="button"
+      style="background-color:rgb(164, 82, 37);"
+      class="btn btn-primary btn-lg  w-100" 
+      routerLink="/cars" 
+      
+    >
+      İptal
+    </button>
+  
+  </div>
+
+  </div>
+
+  <br>
+
 
   <div class="alert alert-success" *ngFor="let car of cars" role="alert">
     <h4 class="alert-heading">Araba Açıklaması  </h4>
@@ -53,6 +97,8 @@
   </div>
 
 
+
+  
   <br>
   <figure class="text-center">
     <blockquote class="blockquote">
@@ -63,4 +109,4 @@
     </figcaption>
   </figure>
 
-  
+  </div>
