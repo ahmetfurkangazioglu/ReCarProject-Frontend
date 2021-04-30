@@ -1,42 +1,85 @@
+<div class="container mt-4">
+  <div class="row" id="ads">
+    <div>
+      <div class="row">
+        <div class="col-md-3">
+          <app-brand></app-brand>
+        </div>
 
-<div class="row" >
-<div class="col-md-3">
-<app-brand></app-brand>
-</div>
+        <div class="col-md-9">
+          <label for="filterText" class="form-label">Araba arayın</label>
+          <input type="text" name="search"  class="form-control" [(ngModel)]="filterText" list="datalistOptions" id="filterText" placeholder="Arama..">
+          <br>
+          <div *ngIf="filterText.length>0" class="alert alert-success">
+          {{filterText}} aradınız
+          </div>    
+         
+         
 
-
-<div class="col-md-9">
-<label for="filterText" class="form-label">Araba arayın</label>
-<input class="form-control" [(ngModel)]="filterText" list="datalistOptions" id="filterText" placeholder="Aramak istediğiniz araba">
-<br>
-<div *ngIf="filterText.length>0" class="alert alert-success">
-{{filterText}} aradınız
-</div>
-
-<h4 >ARAÇ LİSTESİ </h4>
-<div class="row">
-<div  class="card" *ngFor="let car of cars | carFilter:filterText"   style="width: 18rem;">
-  <div *ngIf="car.imagePath != null"> 
-  <img src="{{imageBasePath}}/{{car.imagePath }}" routerLink="/cars/details/{{car.carId}}" class="card-img-top" alt="{{car.description}} Image">
-  <div class="card-body">
-    <h5 class="card-title">{{car.carName }}</h5>
-    <br>
+          <div  class="row">
+            <div
+              *ngFor="let car of cars | carFilter: filterText"
+              class="col-md-4 mb-4"
+            >
+              
+                <div routerLink="/cars/details/{{ car.carId }}" class="card-body">
+                  <div class="card rounded">
+                    <div class="card-image">
+                      <span class="card-notify-badge">{{ car.brandName }}</span>
+                      <span class="card-notify-year">{{ car.modelYear }} Model</span>
+                      <img
+                        class="img-fluid"
+                        [src]='car.images.length!==0?imageBasePath+car.images[0]:imageBasePath+defaultImage'
+                        alt="Alternate Text"
+                      />
+                    </div>
+                    <div class="card-image-overlay m-auto">
+                      <span class="card-detail-badge">{{ car.carName }}</span>
+                      <span class="card-detail-badge">{{
+                        car.dailyPrice | currency
+                      }}</span>
+                      <span class="card-detail-badge">{{ car.colorName }}</span>
+                    </div>
+                    <div class="card-body text-center">
+                      <section style="float: left">
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          style="background-color: rgb(58, 118, 155)"
+                          routerLink="/cars/details/{{ car.carId }}"
+                        >
+                          Detay
+                        </button>
+                      </section>
+                      <section style="float: right">
+                        <button
+                          type="button"
+                          routerLink="/cars/payment/{{ car.carId }}"
+                          style="background-color: rgb(100, 157, 42)"
+                          (click)="getToastrService()"
+                          class="btn btn-success"
+                        >
+                          Kirala
+                        </button>
+                      </section>
+                    </div>
+                    </div>
+                  </div>
+                
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <ul class="list-group list-group-flush" >
-    <li class="list-group-item">Marka: {{car.brandName | titlecase}} </li>
-    <li class="list-group-item">{{car.modelYear}} Model</li>
-    <li class="list-group-item">{{car.dailyPrice | currency}} / günlük fiyat</li>
-  </ul>
-  <div class="card-body">
-    <section style="float:left">
-      <button type="button" class="btn btn-primary" style="background-color: rgb(14, 105, 162);" routerLink="/cars/details/{{car.carId}}">Detay</button>
-    </section>
-    <section style="float:right"  >
-      <button  type="button" routerLink="/cars/payment/{{car.carId}}" style="background-color: rgb(72, 132, 12);" (click)="getToastrService()" class="btn btn-success">Kirala</button>
-    </section>
-   </div>
- </div>
 </div>
-</div>
-</div>
-</div>
+
+
+
+
+
+
+
+
+

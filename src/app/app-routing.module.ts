@@ -1,9 +1,15 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { BrandAddComponent } from './components/brand-add/brand-add.component';
 import { BrandComponent } from './components/brand/brand.component';
+import { CarAddComponent } from './components/car-add/car-add.component';
 import { CarComponent } from './components/car/car.component';
 import { CardetailComponent } from './components/cardetail/cardetail.component';
+import { ColorAddComponent } from './components/color-add/color-add.component';
 import { CustomerComponent } from './components/customer/customer.component';
+import { ImagePanelComponent } from './components/image-panel/image-panel.component';
+import { LoginRegisterComponent } from './components/login-register/login-register.component';
 import { PaymentAddComponent } from './components/payment-add/payment-add.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { RentalComponent } from './components/rental/rental.component';
@@ -19,7 +25,13 @@ const routes: Routes = [
   {path:"cars/filter/:brandId/:colorId",component:CarComponent},
   {path:"cars/payment/:carId",component:PaymentComponent},
   {path:"payment",component:PaymentAddComponent},
-  
+  {path:"admin-panel",component:AdminPanelComponent},
+  {path:"caradd",component:CarAddComponent},
+  {path:"brandadd",component:BrandAddComponent},
+  {path:"coloradd",component:ColorAddComponent},
+  {path:"cars/image-panel/:carId",component:ImagePanelComponent},
+  {path:"login",component:LoginRegisterComponent},
+
   
   
 

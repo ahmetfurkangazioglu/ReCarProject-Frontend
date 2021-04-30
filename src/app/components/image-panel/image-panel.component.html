@@ -1,0 +1,203 @@
+<!-- Load an icon library -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+
+<!-- The sidebar -->
+<div class="sidebar">
+  <a routerLink="/caradd"><i class="fa fa-fw fa-wrench"></i> Araba İşlemleri</a>
+  <a routerLink="/brandadd"
+    ><i class="fa fa-fw fa-wrench"></i> Marka İşlemleri</a
+  >
+  <a routerLink="/coloradd"
+    ><i class="fa fa-fw fa-wrench"></i> Renk İşlemleri</a
+  >
+</div>
+
+<button
+type="button"
+
+style="background-color: rgb(40, 118, 36)"
+(click)="checkBool('add',1)"
+class="btn btn-success btn-lg"
+data-bs-toggle="modal" data-bs-target="#imageModal"
+>
+ Yeni Resim Ekle
+</button>
+
+
+
+<section style="float: right">
+    <button
+      type="button "
+     
+      style="background-color: rgb(184, 68, 68)"
+      routerLink="/caradd"
+      class="btn btn-success btn-lg"
+    >
+     Araba İşlem Ekranına dön
+    </button>
+  </section>
+
+
+<div  class="row">
+    <div
+    *ngFor="let carImage of carImages"
+      class="col-md-4 mb-4"
+    >
+      
+        <div  class="card-body">
+          <div class="card rounded">
+            <div class="card-image">
+           
+             
+              <img
+                class="img-fluid"
+                src="{{imageBasePath}}/{{carImage.imagePath}}"
+                
+                alt="Alternate Text"
+              />
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Resim yolu:  {{carImage.imagePath}}</li>
+                <li class="list-group-item">Resim yüklenme Tarihi: <strong> {{carImage.date}}</strong> </li>
+                <li *ngFor="let car of cars" class="list-group-item">Arabanın Markası: <strong> {{car.brandName}}</strong></li>
+              </ul>
+            <div class="card-body text-center">
+              <section style="float: left">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  style="background-color: rgb(58, 118, 155)"
+                  data-bs-toggle="modal" data-bs-target="#imageModal"
+                  (click)="checkBool('update',carImage.imageId)"
+
+                  
+                >
+                  Güncelle
+                </button>
+              </section>
+              <section style="float: right">
+                <button
+                  type="button"
+                 
+                  style="background-color: rgb(184, 68, 68)"
+                
+                  class="btn btn-success"
+                >
+                   Resmi Sil
+                </button>
+              </section>
+            </div>
+            </div>
+          </div>
+        
+      
+    </div>
+  </div>
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">Resim işlem paneli</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+
+        
+      <div style="background-color: rgb(202, 232, 232);" class="card">
+
+          <div *ngIf="checkAdd">
+          <div class="card-body">
+              <form [formGroup]="carImageForm">
+                  
+                  <div class="mb-3">
+                      <label for="ImageImage"> <h5>Resim Yolu Seçiniz </h5></label>
+                  <div class="form-group">
+                     
+                      <div class="input-group mb-3">
+                        <input  style="text-align: center; border: 3px solid rgb(108, 34, 63)" 
+                        formControlName="imagePath" 
+                        type="file" 
+                        class="form-control" 
+                        id="imagePath"
+                        name="imagePath"
+                        accept="image/x-png, image/jpeg"
+                        (change)="onFileSelected($event)"
+                        >
+                      </div>
+                  </div>
+                  </div>              
+              </form> 
+          </div>          
+      </div>
+    </div>
+
+    <div *ngIf="checkDelete">
+
+      <div style="background-color: rgb(216, 143, 143);" class="modal-body">
+        <h4> Silmek istediğinize emin misiniz?</h4>
+      </div>
+
+    </div>
+    <div style="background-color: rgb(181, 214, 227);" class="card">
+    <div *ngIf="checkUpdate">
+      <div class="card-body">
+          <form [formGroup]="carImageForm">
+              
+              <div class="mb-3">
+                <label for="ImageImage"> <h5>Resim Yolu Seçiniz </h5></label>
+              <div class="form-group">
+                  <input  
+                  formControlName="imagePath" 
+                  type="file" 
+                  class="form-control" 
+                  id="imagePath"
+                  name="imagePath"
+                  accept="image/x-png, image/jpeg"
+                  (change)="onFileSelected($event)"
+                  />
+              </div>
+              <h6>Seçtiğiniz Marka: <strong> deneme</strong></h6> 
+              </div>              
+          </form> 
+      </div>          
+  </div>
+</div>
+
+      <div class="modal-footer">
+
+
+       <div *ngIf="checkAdd">
+        <button type="button"  style=" background-color: rgb(68, 155, 66);" class="btn btn-lg w-10" (click)="addImage()"  >Ekle</button>
+       </div>
+       
+       
+       <div *ngIf="checkDelete">
+        <button type="button" style=" background-color: rgb(196, 137, 137);" class="btn btn-lg w-10" (click)="carImageAdd()"  >Sil</button>
+       </div>
+     
+       <div *ngIf="checkUpdate">
+        <button type="button"  style=" background-color: rgb(171, 194, 188);" class="btn btn-lg w-10"  (click)="updateImage()"
+        >Güncelle</button>
+       </div>
+
+
+        <div></div>
+        <button type="button"  class="btn btn-lg w-10" style="background-color:rgb(183, 76, 76);" data-bs-dismiss="modal">İptal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,373 @@
+<!-- Load an icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- The sidebar -->
+<div class="sidebar">
+   <a routerLink="/caradd"><i class="fa fa-fw fa-wrench"></i> Araba İşlemleri</a>
+  <a routerLink="/brandadd"><i class="fa fa-fw fa-wrench"></i> Marka İşlemleri</a>
+  <a routerLink="/coloradd"><i class="fa fa-fw fa-wrench"></i> Renk İşlemleri</a>
+ 
+</div>
+
+
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+      <label for="filterText" class="form-label">Araba arayın</label>
+          <input type="text" name="search"  class="form-control" [(ngModel)]="filterText" list="datalistOptions" id="filterText" placeholder="Arama..">
+          <br>
+          <div *ngIf="filterText.length>0" class="alert alert-success">
+          {{filterText}} aradınız
+          </div>  
+        </div>  
+    <div class="col-md-3" >
+      <button
+      type="button"
+      style="background-color: rgb(80, 142, 19)"
+      
+      class="btn btn-success btn-lg"
+      (click)="checkBool('add',0)"
+      data-bs-toggle="modal" data-bs-target="#carModal"
+    >
+      Araba Ekle
+   </button>
+    </div>
+
+        </div>
+
+
+
+<div class="row" id="ads">
+    <div>
+      <div class="row">
+        <div class="col-md-1">
+          
+        </div>
+
+        <div class="col-md-9">
+          
+         
+
+          <div  class="row">
+            <div
+              *ngFor="let car of cars | carFilter: filterText"
+              class="col-md-4 mb-4"
+            >
+              
+                <div  class="card-body">
+                  <div class="card rounded">
+                    <div class="card-image">
+                      <span class="card-notify-badge">{{ car.brandName }}</span>
+                      <span class="card-notify-year">{{ car.modelYear }} Model</span>
+                      <img
+                        class="img-fluid"
+                        [src]='car.images.length!==0?imageBasePath+car.images[0]:imageBasePath+defaultImage'
+                        alt="Alternate Text"
+                      />
+                    </div>
+                    <div class="card-image-overlay m-auto">
+                      <span class="card-detail-badge">{{ car.carName }}</span>
+                      <span class="card-detail-badge">{{
+                        car.dailyPrice | currency
+                      }}</span>
+                      <span class="card-detail-badge">{{ car.colorName }}</span>
+                    </div>
+                    <div class="card-body text-center">
+                      <section style="float: left">
+                        <button
+                          type="button"
+                          class="btn btn-primary btn-sm"
+                          style="background-color: rgb(58, 118, 155)"
+                          (click)="checkBool('update',car.carId)"
+                          (click)="createCarUpdateForm(car)"
+                          data-bs-toggle="modal" data-bs-target="#carModal"
+                        >
+                          Güncelle
+                        </button>
+                      </section>
+                      <section style="float: right">
+                        <button
+                          type="button"                        
+                          style="background-color: rgb(179, 86, 86)"
+                          class="btn btn-success btn-sm"
+                          (click)="checkBool('delete',car.carId)"
+                          data-bs-toggle="modal" data-bs-target="#carModal"
+                        >
+                          Arabı Sil
+                        </button>
+                      </section>
+                      <br>
+
+                      <br>
+                      <button
+                      type="button"                        
+                      style="background-color: rgb(157, 107, 107)"
+                      class="btn btn-success btn-sm" 
+                      routerLink="/cars/image-panel/{{car.carId}}"
+                    >
+                      Resim işlemleri
+                    </button>
+                    </div>
+                    </div>
+                  </div>
+                
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Modal -->
+<div class="modal fade" id="carModal" tabindex="-1" aria-labelledby="carModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="carModalLabel">Renk işlem paneli</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+
+        
+      <div style="background-color: rgb(160, 211, 211);" class="card">
+
+          <div *ngIf="checkAdd">
+          <div class="card-body">
+              <form [formGroup]="carAddForm">
+                  
+                  <div class="mb-3">
+                      <label for="carName"> <h5>Araba adını yazınız </h5></label>
+                  <div class="form-group">
+                      <input  
+                      id="carName" 
+                      formControlName="carName" 
+                      class="form-control" 
+                      style="text-align: center; border: 3px solid rgb(106, 22, 55)"
+                      
+                     placeholder= "Araba adı" />
+                  </div>
+                  </div>          
+                  
+                  
+                  <div class="mb-3">
+                    <label for="brandName"> <h5>Marka seçiniz</h5></label>
+                    <div class="form-group">
+                    <select
+                    formControlName="brandId"                                     
+                      id="brandSelect"
+                      class="form-select"
+                      style="text-align: center; border: 3px solid rgb(106, 22, 55)"
+                      aria-label="Markalar"
+                    >
+                      <option *ngFor="let brand of brands"  [value]="brand.brandId">
+                        {{ brand.brandName}} 
+        
+                      </option>
+                    </select>
+                </div>        
+              </div>
+                <div class="mb-3">
+                  <label for="colorName"> <h5>Renk seçiniz</h5></label>
+                    <div class="form-group">
+                    <select
+                    formControlName="colorId"                                     
+                      id="colorSelect"
+                      class="form-select"
+                      style="text-align: center; border: 3px solid rgb(106, 22, 55)"
+                      aria-label="Markalar"
+                    >
+                      <option *ngFor="let color of colors"  [value]="color.colorId">
+                        {{color.colorName}} 
+        
+                      </option>
+                    </select>
+                </div>        
+              </div>
+
+              <div class="mb-3">
+                <label for="modelYear"> <h5>Model yılını giriniz </h5></label>
+            <div class="form-group">
+                <input  type="number"
+                id="modelYear" 
+                formControlName="modelYear" 
+                class="form-control" 
+                style="text-align: center; border: 3px solid rgb(106, 22, 55)"
+                placeholder="Model yılı"/>
+            </div>
+            </div>        
+
+            <div class="mb-3">
+              <label for="dailyPrice"> <h5>Arabanın günlük fiyatı </h5></label>
+          <div class="form-group">
+              <input  type="number"
+              id="dailyPrice" 
+              formControlName="dailyPrice" 
+              class="form-control" 
+              style="text-align: center; border: 3px solid rgb(106, 22, 55)"
+              placeholder="Günlük fiyat"/>
+          </div>
+          </div>        
+
+          <div class="mb-3">
+            <label for="description"> <h5>Arabanın açıklaması </h5></label>
+        <div class="form-group">
+            <input  
+            id="description" 
+            formControlName="description" 
+            class="form-control" 
+            style="text-align: center; border: 3px solid rgb(106, 22, 55)"
+            placeholder="Arabanın açıklaması"/>
+        </div>
+        </div>        
+
+              </form> 
+          </div>          
+      </div>
+    </div>
+
+    <div *ngIf="checkDelete">
+
+      <div style="background-color: rgb(216, 143, 143);" class="modal-body">
+        <h4> Silmek istediğinize emin misiniz?</h4>
+      </div>
+
+    </div>
+
+
+    <div style="background-color: rgb(181, 214, 227);" class="card">
+    <div *ngIf="checkUpdate">
+      <div class="card-body">
+        <form [formGroup]="carUpdateForm">
+            
+            <div class="mb-3">
+                <label for="carName"> <h5>Araba adını yazınız </h5></label>
+            <div class="form-group">
+                <input 
+                id="carName" 
+                formControlName="carName" 
+                class="form-control" 
+                style="text-align: center; border: 3px solid rgb(106, 22, 55)"
+                
+              placeholder="Araba adı"/>
+            </div>
+            </div>          
+            
+            
+            <div class="mb-3">
+              <label for="brandName"> <h5>Marka seçiniz</h5></label>
+              <div class="form-group">
+              <select
+              formControlName="brandId"                                     
+                id="brandSelect"
+                class="form-select"
+                style="text-align: center; border: 3px solid rgb(106, 22, 55)"
+                aria-label="Markalar"
+              >
+                <option *ngFor="let brand of brands"  [value]="brand.brandId">
+                  {{ brand.brandName}} 
+  
+                </option>
+              </select>
+          </div>        
+        </div>
+          <div class="mb-3">
+            <label for="colorName"> <h5>Renk seçiniz</h5></label>
+              <div class="form-group">
+              <select
+              formControlName="colorId"                                     
+                id="colorSelect"
+                class="form-select"
+                style="text-align: center; border: 3px solid rgb(106, 22, 55)"
+                aria-label="Markalar"
+              >
+                <option *ngFor="let color of colors"  [value]="color.colorId">
+                  {{color.colorName}} 
+  
+                </option>
+              </select>
+          </div>        
+        </div>
+
+        <div class="mb-3">
+          <label for="modelYear"> <h5>Model yılını giriniz </h5></label>
+      <div class="form-group">
+          <input  type="number"
+          id="modelYear" 
+          formControlName="modelYear" 
+          class="form-control" 
+          style="text-align: center; border: 3px solid rgb(106, 22, 55)"
+          placeholder="Model yılı"/>
+      </div>
+      </div>        
+
+      <div class="mb-3">
+        <label for="dailyPrice"> <h5>Arabanın günlük fiyatı </h5></label>
+    <div class="form-group">
+        <input  type="number"
+        id="dailyPrice" 
+        formControlName="dailyPrice" 
+        class="form-control" 
+        style="text-align: center; border: 3px solid rgb(106, 22, 55)"
+        placeholder="Günlük fiyat"/>
+    </div>
+    </div>        
+
+    <div class="mb-3">
+      <label for="description"> <h5>Arabanın açıklaması </h5></label>
+  <div class="form-group">
+      <input  
+      id="description" 
+      formControlName="description" 
+      class="form-control" 
+      style="text-align: center; border: 3px solid rgb(106, 22, 55)"
+      placeholder="Arabanın açıklaması"/>
+  </div>
+  </div>        
+
+        </form> 
+    </div>          
+</div>
+  </div>
+</div>
+
+
+
+      <div class="modal-footer">
+
+
+       <div *ngIf="checkAdd">
+        <button type="button"  style=" background-color: rgb(102, 142, 131);" class="btn btn-lg w-10" (click)="carAdd()"  >Ekle</button>
+       </div>
+       
+       
+       <div *ngIf="checkDelete">
+        <button type="button" style=" background-color: rgb(75, 123, 110);" class="btn btn-lg w-10" (click)="carDelete()"  >Sil</button>
+       </div>
+     
+       <div *ngIf="checkUpdate">
+        <button type="button"  style=" background-color: rgb(75, 123, 110);" class="btn btn-lg w-10" (click)="carUpdate()"   >Güncelle</button>
+       </div>
+
+
+        <div></div>
+        <button type="button"  class="btn btn-lg w-10" style="background-color:rgb(207, 88, 88);" data-bs-dismiss="modal">İptal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+             

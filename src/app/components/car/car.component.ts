@@ -13,7 +13,9 @@ import { CarService } from 'src/app/services/car.service';
 export class CarComponent implements OnInit {
 
   cars:Car[]=[]; 
+  images:string;
   filterText="";
+  defaultImage="Images/default.jpg"
   imageBasePath="https://localhost:44313/"
   constructor(private carService:CarService,
    private activatedRoute:ActivatedRoute,
@@ -34,12 +36,17 @@ export class CarComponent implements OnInit {
        this.getCars();
         
       }
+      
     })
   }
 
   getCars(){
-    this.carService.getCars().subscribe(response=>{
-      this.cars=response.data;       
+    this.carService.getFilterCars().subscribe(response=>{
+      this.cars=response.data;
+    
+
+             
+      
     })
   }
   
@@ -51,6 +58,7 @@ export class CarComponent implements OnInit {
   getCarsByColor(colorId:number){
     this.carService.getCarsByColor(colorId).subscribe(response=>{
       this.cars=response.data;
+    
     })
   } 
 
@@ -63,4 +71,6 @@ export class CarComponent implements OnInit {
   getToastrService(){
     this.toastrService.success("araba kiralama ekranına gidiliyor")
   }
+
 }
+

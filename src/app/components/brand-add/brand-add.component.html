@@ -1,0 +1,173 @@
+<!-- Load an icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<!-- The sidebar -->
+<div class="sidebar">
+   <a routerLink="/caradd"><i class="fa fa-fw fa-wrench"></i> Araba İşlemleri</a>
+  <a routerLink="/brandadd"><i class="fa fa-fw fa-wrench"></i> Marka İşlemleri</a>
+  <a routerLink="/coloradd"><i class="fa fa-fw fa-wrench"></i> Renk İşlemleri</a>
+ 
+</div>
+
+
+
+<div class="row">
+
+    <div class="col-sm-9">
+        <label for="filterText" class="form-label">Marka arayın</label>
+        <input type="text" name="search"  class="form-control" [(ngModel)]="filterText" list="datalistOptions" id="filterText" placeholder="Arama..">
+        <br>
+        <div *ngIf="filterText.length>0" class="alert alert-success">
+        {{filterText}} aradınız
+        </div>    
+    </div>
+    
+    <div class="col -sm-3">
+<br>
+   <section style="float:left">
+    <button type="button" (click)="checkBool('add',0,'')"  class="btn btn-lg w-100" data-bs-toggle="modal" data-bs-target="#brandModal"  style="background-color:rgb(171, 194, 188);">Marka ekle</button>
+  </section>
+  
+    </div>
+    
+</div>
+
+
+
+
+
+
+
+
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    
+  
+</head>
+
+<div class="row">
+<table class="table table-hover">
+    <thead class="table-dark"  >
+      <tr >
+        <th style="color: white;" scope="col">Marka Id</th>
+        <th style="color: white;" scope="col">Marka İsmi</th>
+        <th style="color: white;" scope="col">İşlemler</th>
+        
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let brand of brands | brandFilter:filterText">
+        <th scope="row">{{brand.brandId}}</th>
+        <td>{{brand.brandName}}</td>       
+       <body>
+    	
+        <td  class="td-actions text-right">
+           
+            <button type="button" (click)="checkBool('update',brand.brandId,brand.brandName)"  data-bs-toggle="modal" data-bs-target="#brandModal" rel="tooltip" class="btn btn-success btn-just-icon btn-sm" data-original-title="" title="">
+                <i class="material-icons">edit</i>
+            </button>
+            <button type="button" (click)="checkBool('delete',brand.brandId,brand.brandName)"  data-bs-toggle="modal" data-bs-target="#brandModal" rel="tooltip" class="btn btn-danger btn-just-icon btn-sm" data-original-title="" title="">
+                <i class="material-icons">close</i>
+            </button>
+        </td>
+           </body>
+
+
+      </tr>
+    
+    </tbody>
+  </table>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="brandModal" tabindex="-1" aria-labelledby="brandModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="brandModalLabel">Marka işlem paneli</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+
+          
+        <div style="background-color: rgb(202, 232, 232);" class="card">
+
+            <div *ngIf="checkAdd">
+            <div class="card-body">
+                <form [formGroup]="brandAddForm">
+                    
+                    <div class="mb-3">
+                        <label for="brandName"> <h5>Marka adını yazınız </h5></label>
+                    <div class="form-group">
+                        <input  
+                        id="brandName" 
+                        formControlName="brandName" 
+                        class="form-control" 
+                        placeholder="Marka adı"/>
+                    </div>
+                    </div>              
+                </form> 
+            </div>          
+        </div>
+      </div>
+
+      <div *ngIf="checkDelete">
+
+        <div style="background-color: rgb(216, 143, 143);" class="modal-body">
+          <h4> Silmek istediğinize emin misiniz?</h4>
+        </div>
+
+      </div>
+      <div style="background-color: rgb(181, 214, 227);" class="card">
+      <div *ngIf="checkUpdate">
+        <div class="card-body">
+            <form [formGroup]="brandAddForm">
+                
+                <div class="mb-3">
+                    <label for="brandName"> <h5> Güncel Marka adını yazınız </h5></label>
+                <div class="form-group">
+                    <input  
+                    id="brandName" 
+                    formControlName="brandName" 
+                    class="form-control" 
+                    placeholder="Marka adı"/>
+                </div>
+                <h6>Seçtiğiniz Marka: <strong> {{brandName}}</strong></h6> 
+                </div>              
+            </form> 
+        </div>          
+    </div>
+  </div>
+
+        <div class="modal-footer">
+ 
+
+         <div *ngIf="checkAdd">
+          <button type="button"  style=" background-color: rgb(171, 194, 188);" class="btn btn-lg w-10" (click)="brandAdd()"  >Ekle</button>
+         </div>
+         
+         
+         <div *ngIf="checkDelete">
+          <button type="button" style=" background-color: rgb(171, 194, 188);" class="btn btn-lg w-10" (click)="brandDelete()"  >Sil</button>
+         </div>
+       
+         <div *ngIf="checkUpdate">
+          <button type="button"  style=" background-color: rgb(171, 194, 188);" class="btn btn-lg w-10" (click)="brandUpdate()"   >Güncelle</button>
+         </div>
+
+
+          <div></div>
+          <button type="button"  class="btn btn-lg w-10" style="background-color:rgb(213, 120, 120);" data-bs-dismiss="modal">İptal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+

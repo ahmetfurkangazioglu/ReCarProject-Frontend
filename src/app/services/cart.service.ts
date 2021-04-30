@@ -18,26 +18,25 @@ export class CartService {
   constructor( private carService:CarService,
     private cartComponent:CarComponent ) { }
 
-  getCars(){
-    this.carService.getCars().subscribe(response=>{
-      this.cars=response.data;  
-    })
-  }
-
   addToCart(){
     
-    this.cars.forEach((element  =>{
-      let item = CartItems.find(c=>c.car.carId===element.carId)  
-      if(item){
-      item.quantity+=1;
-      }
-      else{
-      let cartItem= new CartItem()
-      cartItem.car=element
-      cartItem.quantity=1
-      CartItems.push(cartItem);
-      }   
-    }))
+
+   this.carService.getFilterCars().subscribe(response=>{
+      this.cars=response.data;  
+      this.cars.forEach((element  =>{
+        let item = CartItems.find(c=>c.car.carId===element.carId)  
+        if(item){
+        item.quantity+=1;
+        }
+        else{
+        let cartItem= new CartItem()
+        cartItem.car=element
+        cartItem.quantity=1
+        CartItems.push(cartItem);
+        }   
+      }))
+    })
+  
   }
    
   list():CartItem[]{

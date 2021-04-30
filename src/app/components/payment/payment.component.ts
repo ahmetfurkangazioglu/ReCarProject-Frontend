@@ -18,6 +18,7 @@ import { RentalService } from 'src/app/services/rental.service';
 export class PaymentComponent implements OnInit {
 
  cars:Car[]=[];
+ defaultImage="Images/default.jpg"
 
  //rentalCheckForm:FormGroup;
 
