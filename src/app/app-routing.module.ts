@@ -13,6 +13,7 @@ import { LoginRegisterComponent } from './components/login-register/login-regist
 import { PaymentAddComponent } from './components/payment-add/payment-add.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { RentalComponent } from './components/rental/rental.component';
+import { LoginGuard } from './guards/login.guard';
 
 const routes: Routes = [
   {path:"",pathMatch:"full",component:CarComponent},
@@ -25,11 +26,11 @@ const routes: Routes = [
   {path:"cars/filter/:brandId/:colorId",component:CarComponent},
   {path:"cars/payment/:carId",component:PaymentComponent},
   {path:"payment",component:PaymentAddComponent},
-  {path:"admin-panel",component:AdminPanelComponent},
-  {path:"caradd",component:CarAddComponent},
-  {path:"brandadd",component:BrandAddComponent},
-  {path:"coloradd",component:ColorAddComponent},
-  {path:"cars/image-panel/:carId",component:ImagePanelComponent},
+  {path:"admin-panel",component:AdminPanelComponent, canActivate:[LoginGuard]},
+  {path:"caradd",component:CarAddComponent, canActivate:[LoginGuard]},
+  {path:"brandadd",component:BrandAddComponent, canActivate:[LoginGuard]},
+  {path:"coloradd",component:ColorAddComponent, canActivate:[LoginGuard]},
+  {path:"cars/image-panel/:carId",component:ImagePanelComponent, canActivate:[LoginGuard]},
   {path:"login",component:LoginRegisterComponent},
 
   

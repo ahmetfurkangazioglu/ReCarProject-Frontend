@@ -4,26 +4,30 @@
             <div class="login-box">
                 <div class="login-snip"> <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">GİRİŞ YAP</label> <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">ÜYE OL</label>
                     <div class="login-space">
+                        <form [formGroup]="loginForm">
                         <div class="login">
-                            <div class="group"> <label for="user" class="label">Email Adresi</label> <input id="user3" type="email" class="input" placeholder="Email adresini giriniz"> </div>
-                            <div class="group"> <label for="pass" class="label">Şifre</label> <input id="pass1" type="password" class="input" data-type="password" placeholder="Şifrenizi giriniz"> </div>
+                            <div class="group"> <label for="user3" class="label">Email Adresi</label> <input id="user3" formControlName="email" type="email" class="input" placeholder="Email adresini giriniz"> </div>
+                            <div class="group"> <label for="pass1" class="label">Şifre</label> <input id="pass1" formControlName="password" type="password" class="input" data-type="password" placeholder="Şifrenizi giriniz"> </div>
                             <div class="group"> <input id="check" type="checkbox" class="check" checked> <label for="check"><span class="icon"></span> Oturumumu açık tut</label> </div>
-                            <div class="group"> <input type="submit" class="button" value="GİRİŞ YAP"> </div>
+                            <div class="group"> <input type="submit" class="button" (click)=login() value="GİRİŞ YAP"> </div>
                             <div class="hr"></div>
                             <div class="foot"> <a href="#">Parolanızı mı unuttunuz?</a> </div>
                         </div>
+                    </form>
+                    <form [formGroup]="registerForm">
                         <div class="sign-up-form">
-                            <div class="group"> <label for="user" class="label">Adınız</label> <input id="user" type="text" class="input" placeholder="Adınızı giriniz"> </div>
-                            <div class="group"> <label for="user" class="label">Soyadınız</label> <input id="user2" type="text" class="input" placeholder="Soyadınızı giriniz"> </div>
-                            <div class="group"> <label for="pass" class="label">Email Adresi</label> <input id="pass2" type="email" class="input" placeholder="Email adresini giriniz"> </div>
-                            <div class="group"> <label for="pass" class="label">Repeat Password</label> <input id="pass3" type="password" class="input" data-type="password" placeholder="Repeat your password"> </div>
-                            <div class="group"> <label for="pass" class="label">Şifre</label> <input id="pass4" type="password" class="input" data-type="password" placeholder="Şifreni oluştur"> </div>
+                            <div class="group"> <label for="user" class="label">Adınız</label> <input id="user" formControlName="firstName" type="text" class="input" placeholder="Adınızı giriniz"> </div>
+                            <div class="group"> <label for="user2" class="label">Soyadınız</label> <input id="user2" formControlName="lastName" type="text" class="input" placeholder="Soyadınızı giriniz"> </div>
+                            <div class="group"> <label for="pass2" class="label">Email Adresi</label> <input id="pass2" formControlName="email" type="email" class="input" placeholder="Email adresini giriniz"> </div>
+                            <div class="group"> <label for="pass3" class="label">Repeat Password</label> <input id="pass3" formControlName="phoneNumber" type="password" class="input" data-type="password" placeholder="Repeat your password"> </div>
+                            <div class="group"> <label for="pass4" class="label">Şifre</label> <input id="pass4" formControlName="password" type="password" class="input" data-type="password" placeholder="Şifreni oluştur"> </div>
                             
                         
-                            <div class="group"> <input type="submit" class="button" value="ÜYE OL"> </div>
+                            <div class="group"> <input type="submit" class="button" (click)="register()" value="ÜYE OL"> </div>
                             
                             <div class="foot"> <label for="tab-1">Zaten Üye misiniz?</label> </div>
                         </div>
+                    </form>
                     </div>
                 </div>
             </div>
